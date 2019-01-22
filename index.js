@@ -9,7 +9,9 @@ const authRoute = require('./routes/auth');
 
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
-mongoose.connect(keys.mongoDBURI);
+mongoose.connect(keys.mongoDBURI)
+  .then(() => { console.log('connected to mongoDB'); })
+  .catch(() => { console.log('Could not connect to mongoDB...'); });
 
 app.use('/', defaultRoute);
 app.use('/auth', authRoute);
