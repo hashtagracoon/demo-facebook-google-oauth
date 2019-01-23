@@ -6,12 +6,15 @@ class Header extends Component {
   renderLoginButton() {
     if(this.props.auth) {
       return (
-        <li><a href="#">Hello { this.props.auth.name } !</a></li>
+        <div>
+          <li>Hello { this.props.auth.name } !</li>
+          <li><a href="/auth/api/logout">Logout</a></li>
+        </div>
       );
     }
     else {
       return (
-        <li><a href="#">Login</a></li>
+        <li><a href="/auth/google">Login</a></li>
       );
     }
   }

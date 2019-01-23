@@ -3,12 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Header from './Header';
-
-const Temp = () => {
-  return (
-    <h2>Temp Content here</h2>
-  );
-}
+import Welcome from './Welcome';
 
 const Content = () => {
   return (
@@ -28,7 +23,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={ Temp } />
+            <Route exact path="/" component={ Welcome } />
             <Route path="/welcome" component={ Content } />
           </div>
         </BrowserRouter>
