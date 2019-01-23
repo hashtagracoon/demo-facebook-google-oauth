@@ -18,6 +18,19 @@ router.get(
   }
 );
 
+router.get(
+  '/facebook',
+  passport.authenticate('facebook')
+);
+
+router.get(
+  '/facebook/callback',
+  passport.authenticate('facebook'),
+  (req, res) => {
+    res.redirect('/');
+  }
+);
+
 router.get('/api/user', (req, res) => {
   res.send(req.user);
 });

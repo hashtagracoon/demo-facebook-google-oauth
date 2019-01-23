@@ -14,7 +14,10 @@ class Header extends Component {
     }
     else {
       return (
-        <li><a href="/auth/google">Login</a></li>
+        <div>
+          <li><a href="/auth/google">Login with Google</a></li>
+          <li><a href="/auth/facebook">Login with Facebook</a></li>
+        </div>
       );
     }
   }
