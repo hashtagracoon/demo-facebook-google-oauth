@@ -70,10 +70,30 @@ module.exports = {
           callbackURL: '/auth/facebook/callback',
           proxy: true
         },
-        (accessToken, refreshToken, profile, done) => {
+        async (accessToken, refreshToken, profile, done) => {
           console.log('accessToken', accessToken);
           console.log('refreshToken', refreshToken);
           console.log('profile', profile);
+
+          const [err, oldUser] = await to(User.findOne({ provider: 'facebook', profileId: profile.id }));
+          if(err) {
+            console.log('query mongoDB error: ', err);
+            done(err, null);
+          }
+          else if(!oldUser) {
+            console.log('create new user: ', profile.id);
+            new User({
+              provider: 'facebook',
+              profileId: profile.id,
+              name: profile.displayName
+            })
+              .save()
+              .then((user) => { done(null, user); });
+          }
+          else {
+            console.log('user already signed up before');
+            done(null, oldUser);
+          }
         }
       )
     );
