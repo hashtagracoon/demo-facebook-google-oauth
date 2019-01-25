@@ -68,6 +68,7 @@ module.exports = {
           clientID: keys.facebookClientID,
           clientSecret: keys.facebookClientSecret,
           callbackURL: '/auth/facebook/callback',
+          profileFields: ['id', 'displayName', 'emails', 'likes'],
           proxy: true
         },
         async (accessToken, refreshToken, profile, done) => {
