@@ -76,7 +76,15 @@ module.exports = {
           console.log('refreshToken', refreshToken);
           console.log('profile', profile);
 
-          const [err, oldUser] = await to(User.findOne({ provider: 'facebook', profileId: profile.id }));
+          let likes = [];
+          likes = profile._json.likes.data.map(entry => entry.name);
+          console.log('likes', likes);
+
+          const [err, oldUser] = await to(User.findOneAndUpdate(
+            { provider: 'facebook', profileId: profile.id },
+            { $set: { likes: likes } },
+            { returnNewDocument: true }
+          ));
           if(err) {
             console.log('query mongoDB error: ', err);
             done(err, null);
@@ -86,7 +94,8 @@ module.exports = {
             new User({
               provider: 'facebook',
               profileId: profile.id,
-              name: profile.displayName
+              name: profile.displayName,
+              likes: likes
             })
               .save()
               .then((user) => { done(null, user); });
